@@ -4,7 +4,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
+from boto.S3.connection import S3Connection
 
+conn = S3Connection(WS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY)
+
+text_bucket = conn.get_bucket('project-gutenberg-texts')
 
 dir_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 texts = os.listdir(dir_path)
