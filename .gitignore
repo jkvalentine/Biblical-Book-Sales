@@ -1,2 +1,7 @@
-
+/data/best_sellers_texts/*
 .env
+.domino/
+.dominoignore
+.dominoresults
+domino.log
+dominostats.json
