@@ -1,12 +1,10 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-import glob, os
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from sklearn.feature_extraction.text import CountVectorizer
+from klearn.metrics.pairwise import cosine_similarity
 from boto.s3.connection import S3Connection
 import os
 import numpy as np
+
+
 
 def make_s3_connection():
 	conn = S3Connection(aws_access_key_id=os.environ['AWS_ACCESS_KEY'],\
@@ -27,8 +25,10 @@ def create_path_directory(directory_path):
 		- text_paths: list of path strings to text files
 	'''
 	texts = os.listdir(directory_path)
-	text_paths = [os.path.join(dir_path,text) for text in texts]
+	text_paths = [os.path.join(directory_path,text) for text in texts]
 	return text_paths
+
+
 
 def build_tfidf_vectorizer_model(text_paths):
 	'''
@@ -37,10 +37,12 @@ def build_tfidf_vectorizer_model(text_paths):
 	INPUT:
 		- text_paths: list of path strings to text file
 	OUTPUT:
-		- none
+		- fit tfidf vectorizer
 	'''
 	vectorizer = TfidfVectorizer(input='filename', stop_words='english',decode_error='ignore')
-	vectorizer.fit(text_paths)
+	return vectorizer.fit(text_paths)
+
+
 
 def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 	'''
@@ -58,7 +60,7 @@ def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 	'''
 	if directory == True:
 		texts = os.listdir(path_to_text_to_transform)
-		texts_to_transform = [os.path.join(dir_path,text) for text in texts]
+		texts_to_transform = [os.path.join(ath_to_text_to_transform,text) for text in texts]
 		vectorized_texts = vectorizer.transform(texts_to_transform)
 		return vectorized_texts
 	else:
@@ -68,13 +70,44 @@ def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 
 
 
+def calculate_cosine_similarity(bible_vector, vectorized_texts):
+	'''
+	Calculate cosine similarity among documents in 
+	vectorized corpus of texts
+	
+	INPUT:
+		- bible_vector: vectorized representation of The Bible
+		- vectorized_texts: vectorized representation of corpus '
+		of texts in topic space
+	OUTPUT:
+		- cosine_similarity_matrix: matrix relating bible vector
+			to vectorized texts
+	'''
+	cosine_matrix = cosine_similarity(bible_vector, vectorized_texts)
+	return cosine_matrix
+
+
+
 if __name__ == '__main__':
 	
-	dir_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
+	directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 	
 	text_to_transform=['/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts/1_kjbible.txt']
 
+	path_to_text_to_transform = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
+
+
+	text_paths = create_path_directory(directory_path)
+
+	vectorizer = build_tfidf_vectorizer_model(text_paths)
+
 	bible_vector = vectorizer.transform(text_to_transform)
+
+	vectorized_texts = vectorize_text(vectorizer, path_to_text_to_transform, directory=True)
+
+	cosine_sim_matrix = cosine_similarity_matrix(bible_vector, vectorized_texts)
+
+
 
 
 
