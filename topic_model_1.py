@@ -90,6 +90,9 @@ def calculate_cosine_similarity(bible_vector, vectorized_texts):
 
 if __name__ == '__main__':
 	
+	#To do: figure out how to stream data from S3;
+	# All directory path, text paths will change to refelect this
+
 	directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 	
 	text_to_transform=['/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts/1_kjbible.txt']

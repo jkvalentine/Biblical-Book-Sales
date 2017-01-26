@@ -75,6 +75,9 @@ def compute_distance_between_vectors(W):
 
 if __name__ == '__main__':
 
+	#To do: figure out how to stream data from S3;
+	# All directory path, text paths will change to refelect this
+
 	directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 
 	text_paths = create_path_directory(directory_path)
