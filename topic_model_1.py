@@ -4,31 +4,77 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer
-from boto.S3.connection import S3Connection
+from boto.s3.connection import S3Connection
+import os
+import numpy as np
 
-conn = S3Connection(WS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY)
+def make_s3_connection():
+	conn = S3Connection(aws_access_key_id=os.environ['AWS_ACCESS_KEY'],\
+	 aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
-text_bucket = conn.get_bucket('project-gutenberg-texts')
+	text_bucket = conn.get_bucket('project-gutenberg-texts')
+	
 
-dir_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
-texts = os.listdir(dir_path)
 
-text_paths = [os.path.join(dir_path,text) for text in texts]
+def create_path_directory(directory_path):
+	'''
+	Creates list of path directories for input to vectorizer
 
-lemmatizer =WordNetLemmatizer()
-analyzer = CountVectorizer().build_analyzer()
+	INPUT:
+		- directory_path: absolute directory path to location of
+			text files
+	OUTPUT:
+		- text_paths: list of path strings to text files
+	'''
+	texts = os.listdir(directory_path)
+	text_paths = [os.path.join(dir_path,text) for text in texts]
+	return text_paths
 
-#Attempt to add lemmatization as preprocessing,
-#more complex function for fitting model from raw documents as filenames
+def build_tfidf_vectorizer_model(text_paths):
+	'''
+	Instantiate and fit tfidf vectorizer model
 
-#def lemmatized_words(doc):
-#	return (lemmatizer.lemmatize(word) for word in analyzer(doc))
+	INPUT:
+		- text_paths: list of path strings to text file
+	OUTPUT:
+		- none
+	'''
+	vectorizer = TfidfVectorizer(input='filename', stop_words='english',decode_error='ignore')
+	vectorizer.fit(text_paths)
 
-vectorizer = TfidfVectorizer(input='filename', stop_words='english',decode_error='ignore')
-vectorizer.fit(text_paths)
+def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
+	'''
+	Vectorize text according to fitted model
 
-print vectorizer.vocabulary_
+	INPUT:
+		- text_to_transform: string path to text files or 
+			directory of text files
+		- vectorizer: tfidf vectorized model
+		- directory: Boolean- if path to directory, True
+							  if path to file, False
+	OUTPUT:
+		- vectorized_text: vector representation of
+			vocabulary contained in document
+	'''
+	if directory == True:
+		texts = os.listdir(path_to_text_to_transform)
+		texts_to_transform = [os.path.join(dir_path,text) for text in texts]
+		vectorized_texts = vectorizer.transform(texts_to_transform)
+		return vectorized_texts
+	else:
+		texts_to_transform = [path_to_text_to_transform]
+		vectorized_texts = vectorizer.transform(texts_to_transform)
+		return vectorized_texts
 
+
+
+if __name__ == '__main__':
+	
+	dir_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
+	
+	text_to_transform=['/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts/1_kjbible.txt']
+
+	bible_vector = vectorizer.transform(text_to_transform)
 
 
 
