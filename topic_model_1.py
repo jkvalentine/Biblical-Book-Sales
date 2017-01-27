@@ -1,11 +1,13 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from klearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 from boto.s3.connection import S3Connection
-import os
+import os, sys
 import numpy as np
 
 
 
+#will most likely not implement this s3 connection function
+#since these models will be employed on domino
 def make_s3_connection():
 	conn = S3Connection(aws_access_key_id=os.environ['AWS_ACCESS_KEY'],\
 	 aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
@@ -14,7 +16,7 @@ def make_s3_connection():
 	
 
 
-def create_path_directory(directory_path):
+def create_path_directory(directory_path, directory=True):
 	'''
 	Creates list of path directories for input to vectorizer
 
@@ -24,10 +26,13 @@ def create_path_directory(directory_path):
 	OUTPUT:
 		- text_paths: list of path strings to text files
 	'''
-	texts = os.listdir(directory_path)
-	text_paths = [os.path.join(directory_path,text) for text in texts]
-	return text_paths
-
+	if directory:
+		texts = os.listdir(directory_path)
+		text_paths = [os.path.join(directory_path,text) for text in texts]
+		return text_paths
+	else:
+		text_paths = [directory_path]
+		return text_paths
 
 
 def build_tfidf_vectorizer_model(text_paths):

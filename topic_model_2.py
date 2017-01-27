@@ -4,7 +4,7 @@ from boto.s3.connection import S3Connection
 from topic_model_1 import make_s3_connection, create_path_directory, build_tfidf_vectorizer_model
 from sklearn.metrics.pairwise import euclidean_distances
 import numpy as np
-import os
+import os, sys
 
 
 
@@ -75,8 +75,10 @@ def compute_distance_between_vectors(W):
 
 if __name__ == '__main__':
 
-	#To do: figure out how to stream data from S3;
-	# All directory path, text paths will change to refelect this
+	#To do: figure out how to stream data from S3?;
+	#All directory path, text paths will change to refelect this
+	#Tune hyper-parameters of model to find best number of topics
+	#to model
 
 	directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 
