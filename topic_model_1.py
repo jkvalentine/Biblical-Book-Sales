@@ -18,7 +18,7 @@ def make_s3_connection():
 
 def create_path_directory(directory_path, directory=True):
 	'''
-	Creates list of path directories for input to vectorizer
+	Creates list of path directories for input
 
 	INPUT:
 		- directory_path: absolute directory path to location of
