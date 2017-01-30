@@ -4,3 +4,5 @@
 .dominoresults
 domino.log
 dominostats.json
+.tar.gz
+data/texts_to_move
