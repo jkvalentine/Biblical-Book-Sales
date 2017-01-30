@@ -43,7 +43,7 @@ def transform_corpus(corpus_text_paths, nmf_model):
 			corpus of texts
 	OUTPUT:
 		- W: transformed data, rows of which represent
-			how much each latent feature (column space) 
+			how much each latent feature (column space)
 			is represented in each document (row space)
 	'''
 	X = create_path_directory(corpus_text_paths)
@@ -56,12 +56,13 @@ def transform_corpus(corpus_text_paths, nmf_model):
 def compute_distance_between_vectors(W):
 	'''
 	Compute distance bewteen row vector representing
-	bible projected into topic space with all other 
+	bible projected into topic space with all other
 	documents projected into topic space
 
 	INPUT:
 		- W: corpus of texts represented as vectors,
 			projected onto topic space
+		#Whew!
 	OUTPUT:
 		- distances: numpy array representing
 			distance between document-topic-space
@@ -94,4 +95,6 @@ if __name__ == '__main__':
 
 	distances = euclidean_distances(W)
 
-	
+'''
+This is cool.  Would also be cool to print out the top words from the topics in the Bible so that you can see what they are too.
+'''

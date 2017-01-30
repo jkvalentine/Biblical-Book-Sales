@@ -22,12 +22,14 @@ def create_list_text_strings(text_paths):
 				text_list.append(f.read())
 	return text_list
 
+#Maybe I just don't understand control flow, but why is the continue statement necessary?
+
 
 
 def create_blobs_from_texts(text_list):
 	'''
 	Create text blobs from list of text strings
-	
+
 	INPUT:
 		- text_list: list of text strings
 	OUTPUT:
@@ -39,6 +41,7 @@ def create_blobs_from_texts(text_list):
 		blobs.append(blob)
 	return blobs
 
+#Wooooo blobs
 
 
 def get_document_polarity(blobs):
@@ -85,7 +88,7 @@ def get_title_and_index(text_paths):
 	Return book title and index number
 
 	INPUT:
-		- text_paths: list of file path strings 
+		- text_paths: list of file path strings
 	OUTPUT:
 		- title_index_list: list of tuples of
 			book title and index
@@ -98,6 +101,9 @@ def get_title_and_index(text_paths):
 
 
 
+'''
+Yup, code looks squeaky clean to me.  One potential thing to think about is going beyond polarity and subjectivity for the sentiment analysis.  For instance, what about the emotional content of the story?  You can use this lexicon (http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm) to get how happy/sad/angry/fearful etc. each text is.  Maybe you'll find there's some pattern with that - like, books that have a similar emotional composition to the Bible are more popular?  Here is an example of someone who did this with movies (hence how I know about it becuase her project is like mine): https://github.com/AnnaVM/Project_Plotline.
+'''
 
 if __name__ == '__main__':
 
@@ -117,14 +123,3 @@ if __name__ == '__main__':
 
 	#create list of tuples of the form:
 	# (title, subjectivity_score, polarity_score)
-
-
-
-
-
-
-
-
-
-
-		
