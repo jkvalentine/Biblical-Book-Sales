@@ -13,7 +13,9 @@ def make_s3_connection():
 	 aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'])
 
 	text_bucket = conn.get_bucket('project-gutenberg-texts')
-	
+
+
+
 
 
 def create_path_directory(directory_path, directory=True):
@@ -47,6 +49,8 @@ def build_tfidf_vectorizer_model(text_paths):
 	vectorizer = TfidfVectorizer(input='filename', stop_words='english',decode_error='ignore')
 	return vectorizer.fit(text_paths)
 
+#Want to stem or lemmatize first maybe?
+
 
 
 def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
@@ -54,7 +58,7 @@ def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 	Vectorize text according to fitted model
 
 	INPUT:
-		- text_to_transform: string path to text files or 
+		- text_to_transform: string path to text files or
 			directory of text files
 		- vectorizer: tfidf vectorized model
 		- directory: Boolean- if path to directory, True
@@ -66,6 +70,7 @@ def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 	if directory == True:
 		texts = os.listdir(path_to_text_to_transform)
 		texts_to_transform = [os.path.join(ath_to_text_to_transform,text) for text in texts]
+		#think you mean 'path_to_text_to_transform' there
 		vectorized_texts = vectorizer.transform(texts_to_transform)
 		return vectorized_texts
 	else:
@@ -77,9 +82,9 @@ def vectorize_text(vectorizer,path_to_text_to_transform, directory=False):
 
 def calculate_cosine_similarity(bible_vector, vectorized_texts):
 	'''
-	Calculate cosine similarity among documents in 
+	Calculate cosine similarity among documents in
 	vectorized corpus of texts
-	
+
 	INPUT:
 		- bible_vector: vectorized representation of The Bible
 		- vectorized_texts: vectorized representation of corpus '
@@ -94,12 +99,12 @@ def calculate_cosine_similarity(bible_vector, vectorized_texts):
 
 
 if __name__ == '__main__':
-	
+
 	#To do: figure out how to stream data from S3;
 	# All directory path, text paths will change to refelect this
 
 	directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
-	
+
 	text_to_transform=['/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts/1_kjbible.txt']
 
 	path_to_text_to_transform = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
@@ -115,16 +120,7 @@ if __name__ == '__main__':
 
 	cosine_sim_matrix = cosine_similarity_matrix(bible_vector, vectorized_texts)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	'''
+	Okay, I think I get this but want to make sure.  vectorized_tests is going to output a list of vectorized texts.  Then cosine_sim_matrix is going to calculate the cosine similarity between each of those texts and the Bible.  So it's a matrix where each row is a text, but the only column is the cosine similarity between that text and the Bible?
+	So, basically, it's a comparison of word frequencies between each text and the Bible?
+	'''
