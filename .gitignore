@@ -5,4 +5,5 @@
 domino.log
 dominostats.json
 .tar.gz
-data/texts_to_move
+data/model_texts
+u_book_sales.csv
