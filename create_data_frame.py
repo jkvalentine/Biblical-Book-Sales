@@ -56,16 +56,17 @@ def add_columns_to_data_frame(book_sales_df,
     book_sales_df.drop('years_in_print',axis=1, inplace=True)
     return book_sales_df
 
+def vectorize_text_corpus(text_strings):
+
 
 if __name__ == '__main__':
-
 
     book_sales_file_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/book_sales.csv"
 
     directory_path = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 
     book_sales_df = create_data_frame(book_sales_file_path)
-    
+
     text_strings = list(book_sales_df['text_file'].values)
 
     text_list = create_list_text_strings(text_strings)
@@ -80,20 +81,20 @@ if __name__ == '__main__':
     with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/tfidf_model.pkl') as f:
         tfidf_model = pickle.load(f)
         tfidf_row_vectors = tfidf_model.transform(text_strings)
-    # print "***********"
-    # with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/nmf_model.pkl') as g:
-    #     nmf_model = pickle.load(g)
-    #     nmf_topic_vectors = nmf_model.transform(tfidf_row_vectors)
-    # print "***********"
-    # with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/lda_model.pkl') as h:
-    #     lda_model = pickle.load(h)
-    #     doc_distr_matrix = lda_model.transform(tfidf_row_vectors)
-    
-    # book_sales_df = add_columns_to_data_frame(book_sales_df,
-    #                                           polarity_scores,
-    #                                           subjectivity_scores,
-    #                                           nmf_topic_vectors,
-    #                                           doc_distr_matrix)
+     print "***********"
+     with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/nmf_model.pkl') as g:
+         nmf_model = pickle.load(g)
+        nmf_topic_vectors = nmf_model.transform(tfidf_row_vectors)
+     print "***********"
+     with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/lda_model.pkl') as h:
+         lda_model = pickle.load(h)
+         doc_distr_matrix = lda_model.transform(tfidf_row_vectors)
+
+     book_sales_df = add_columns_to_data_frame(book_sales_df,
+                                               polarity_scores,
+                                               subjectivity_scores,
+                                               nmf_topic_vectors,
+                                               doc_distr_matrix)
     # #save dataframe as pickle
     # with open('book_sales_df.pkl', 'w') as ith:
     #     pickle.dump(book_sales_df, ith)

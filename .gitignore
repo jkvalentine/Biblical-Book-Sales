@@ -7,3 +7,4 @@ dominostats.json
 .tar.gz
 data/model_texts
 u_book_sales.csv
+pickled_models/

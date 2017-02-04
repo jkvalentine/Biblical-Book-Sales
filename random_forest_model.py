@@ -1,32 +1,11 @@
 from sklearn.ensemble import RandomForectRegressor
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import recall_score, precision_score,\
     f1_score, accuracy_score
 import cPickle as pickle
+import pandas as pd
 
 
-def create_train_test_split(text_data_df):
-    '''
-    Create training, tesing, and validation set
-    from data
-    INPUT:
-        - texts_df: dataframe containing
-            text data
-    OUTPUT:
-        - X_train, X_test, y_train, y_test:
-            dataframes and series
-    '''
-    with open('book_sales_df.pkl', 'r') as data:
-        book_sales_df = pickle.load(data)
-    sales = book_sales_df['avg_sales_per_year']
-    features = text_data_df.drop('avg_sales_per_year')
-    X_train, X_test, y_train, y_test = train_test_split(
-        features, sales)
-    with open('test_data.pkl') as k:
-
-
-
-def train_random_forest(X_train, y_train, n_estimators=100):
+def train_random_forest(X_train_, y_train, n_estimators=100):
     '''
     Train random forest regressor on
     training data

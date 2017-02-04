@@ -34,6 +34,7 @@ def build_tfidf_vectorizer_model(text_paths, input='input'):
     vectorizer = TfidfVectorizer(input=input,
                                  stop_words='english',
                                  decode_error='ignore',
+                                 max_features=15000
                                  )
     return vectorizer.fit(text_paths)
 
@@ -73,8 +74,8 @@ def calculate_cosine_similarity(vectorized_texts):
         - vectorized_texts: vectorized representation of corpus '
         of texts in topic space
     OUTPUT:
-        - cosine_similarity_matrix: matrix relating bible vector
-            to vectorized texts
+        - cosine_similarity_matrix: matrix relating
+        texts to each other
     '''
     cosine_matrix = cosine_similarity(vectorized_texts)
     return cosine_matrix
@@ -110,7 +111,8 @@ if __name__ == '__main__':
 
     text_paths = create_path_directory(directory_path)
     tfidf_vectorizer = build_tfidf_vectorizer_model(text_paths,
-                                                    input='filename')
+                                                    input='filename',
+                                                    max_features=15000)
     #For a previous strategy to predict book sales
     #bible_vector = vectorizer.transform(text_to_transform)
 
