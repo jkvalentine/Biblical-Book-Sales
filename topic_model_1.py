@@ -65,24 +65,22 @@ def vectorize_text(vectorizer, path_to_text_to_transform, directory=True):
 
 
 
-def calculate_cosine_similarity(vectorized_texts):
-    
+def calculate_cosine_similarity(vectorized_texts, bible_vector):
     '''
     Calculate cosine similarity among documents in 
     vectorized corpus of texts
     INPUT:
         - vectorized_texts: vectorized representation of corpus '
         of texts in topic space
+        - bible_vector: vectorized representation of the Bible
     OUTPUT:
         - cosine_similarity_matrix: matrix relating
         texts to each other
     '''
-    cosine_matrix = cosine_similarity(vectorized_texts)
+    cosine_matrix = cosine_similarity(vectorized_texts, bible_vector)
     return cosine_matrix
 
 def save_model_as_pickle(file_name, model_name):
-
-
     '''
     Save fit model as pickle file
     INPUT:
@@ -97,11 +95,11 @@ def save_model_as_pickle(file_name, model_name):
 
 
 if __name__ == '__main__':
-    
+
     #To do: figure out how to stream data from S3;
     # All directory path, text paths will change to refelect this
 
-    
+
     directory_path = '/Users/jrrd/Galvanize/Biblical-Book-Sales/data/model_texts'
     #directory_path = "/mnt/jkvalentine7695/Biblical_Book_Sales-Data/text_files/text_archives.tar.gz"
     
