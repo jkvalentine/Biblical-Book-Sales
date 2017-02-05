@@ -2,8 +2,7 @@ import pandas as pd
 from sentiment_analysis import create_list_text_strings,\
     create_blobs_from_texts, get_document_polarity, \
     get_document_subjectivity
-from topic_model_1 import create_path_directory,\
-    save_model_as_pickle, calculate_cosine_similarity
+from topic_model_1 import calculate_cosine_similarity
 import cPickle as pickle
 
 
@@ -29,6 +28,7 @@ def create_data_frame(book_sales_file_path):
     book_sales_df['avg_sales_per_year'] = new_col
     return book_sales_df
 
+
 def add_columns_to_data_frame(book_sales_df,
                               polarity_scores,
                               subjectivity_scores,
@@ -53,12 +53,13 @@ def add_columns_to_data_frame(book_sales_df,
     book_sales_df['polarity'] = polarity_scores
     book_sales_df['subjectivity_score'] = subjectivity_scores
     book_sales_df['tfidf_similarity'] = cosine_tfidf_matrix
-    book_sales_df['nmf_similarity'] = nmf_topic_vectors
-    book_sales_df['topic_distribution'] = doc_distr_matrix
-    book_sales_df.drop('years_in_print',axis=1, inplace=True)
+    book_sales_df['nmf_similarity'] = nmf_similarity
+    book_sales_df['topic_distribution'] = lda_similarity
+    book_sales_df.drop('years_in_print', axis=1, inplace=True)
     return book_sales_df
 
-def vectorize_text_corpus(text_strings, transform='tfidf'):
+
+def vectorize_text_corpus(text_strings):
     '''
     Transform corpus into vectorized tfidf representation
     INPUT:
@@ -66,23 +67,35 @@ def vectorize_text_corpus(text_strings, transform='tfidf'):
     OUTPUT:
         -tfidf_matrix: vectorized version of texts
     '''
-    if transform == 'tfidf':
-        with open(
-            '/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/tfidf_model.pkl') as f:
-            tfidf_model = pickle.load(f)
-        tfidf_matrix = tfidf_model.transform(text_strings)
-        return tfidf_matrix
-    elif vectorizer == 'nmf':
+    with open(
+        '/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/tfidf_model.pkl') as f:
+        tfidf_model = pickle.load(f)
+    tfidf_matrix = tfidf_model.transform(text_strings)
+    return tfidf_matrix
+
+
+def tansform_vector_corpus(tfidf_matrix, nmf=True):
+    '''
+    Transform tfidf matrix to lda or nmf representations
+    in topic space
+    INPUT:
+        -tfidf_matrix: vectorized version of texts
+        - transform: string of 'lda' or 'nmf'
+    OUTPUT
+        - W: nmf topic-document matrix
+        - doc_distr_matrix:
+    '''
+    if nmf == True:
         with open('/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/nmf_model.pkl') as g:
             nmf_model = pickle.load(g)
-        nmf_topic_matrix = nmf_model.transform(tfidf_matrix)
-        return nmf_topic_matrix
-    elif vectorizer == 'lda':
-        with open(
-            '/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/lda_model.pkl') as h:
-            lda_model = pickle.load(h)
-        W = lda_model.transform(tfidf_matrix)
+        W = nmf_model.transform(tfidf_matrix)
         return W
+    # elif nmf == False:
+    #     with open(
+    #         '/Users/jrrd/Galvanize/Biblical-Book-Sales/pickled_models/lda_model.pkl') as h:
+    #         lda_model = pickle.load(h)
+    #     doc_distr_matrix = lda_model.transform(tfidf_matrix)
+    #     return doc_distr_matrix
 
 if __name__ == '__main__':
 
@@ -107,32 +120,34 @@ if __name__ == '__main__':
 
     print "***********"
 
-    tfidf_matrix = vectorize_text_corpus(text_strings, transform='tfidf')
+    tfidf_matrix = vectorize_text_corpus(text_strings)
     bible_path = list(
         book_sales_df[book_sales_df['book'] == 'The_Bible'].text_file)
-    bible_vector = vectorize_text_corpus(bible_path, transform='tfidf')
+    tfidf_bible_vector = vectorize_text_corpus(bible_path)
 
     cosine_tfidf_matrix = calculate_cosine_similarity(
-        tfidf_matrix, bible_vector)
+        tfidf_matrix.todense(), tfidf_bible_vector.todense())
 
-    nmf_topic_matrix = vectorize_text_corpus(tfidf_matrix, transform='nmf')
+    print "***********"
 
-    nmf_bible_vector = vectorize_text_corpus(bible_vector, transform='nmf')
+    W = tansform_vector_corpus(tfidf_matrix, nmf=True)
+    nmf_bible_vector = tansform_vector_corpus(tfidf_bible_vector.todense(), nmf=True)
 
     nmf_similarity = calculate_cosine_similarity(
-        nmf_topic_matrix, nmf_bible_vector)
+        W, nmf_bible_vector)
+    
+    #Issues with lda functioning, will fix in future
+    # doc_distr_matrix = tansform_vector_corpus(tfidf_matrix.todense(), nmf=False)
+    # lda_bible_vector = tansform_vector_corpus(tfidf_bible_vector.todense(), nmf=False)
 
-    W = vectorize_text_corpus(tfidf_matrix, transform='lda')
-    lda_bible_vector = vectorize_text_corpus(bible_vector, transform='lda')
-
-    lda_similarity = calculate_cosine_similarity(
-        W, lda_bible_vector)
+    # lda_similarity = calculate_cosine_similarity(
+    #      W, lda_bible_vector.todense())
 
     book_sales_df = add_columns_to_data_frame(book_sales_df,
                                               polarity_scores,
                                               subjectivity_scores,
                                               cosine_tfidf_matrix,
-                                              nmf_similarity,
-                                              lda_similarity)
+                                              nmf_similarity,)
+                                              #lda_similarity)
     #save dataframe as csv
-    book_sales_df.to_csv('book_sales_df.csv')
+    book_sales_df.to_csv('book_sales_df.csv', index=False)
