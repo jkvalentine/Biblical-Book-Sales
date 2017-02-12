@@ -12,4 +12,4 @@ for name in os.listdir(''):
             #keep tally of how many files removed
             i += 1
 
-print "YAY!!! ENGLISH ONLY"
+print "yay non-empty files only!"
