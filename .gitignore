@@ -9,6 +9,6 @@ data/model_texts
 u_book_sales.csv
 pickled_models/
 *.pptx
-*.ipynb
+Untitled.ipynb
 *.pyc
 pickled_models/
