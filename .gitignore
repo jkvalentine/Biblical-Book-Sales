@@ -8,3 +8,7 @@ dominostats.json
 data/model_texts
 u_book_sales.csv
 pickled_models/
+*.pptx
+*.ipynb
+*.pyc
+pickled_models/
