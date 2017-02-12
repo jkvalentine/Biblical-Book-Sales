@@ -14,5 +14,6 @@
 <p>After expanding the tar.gz file, I then removed empty text files from the corpus using `remove_empty_files.py` </p>   
 <H3 align="center"> Sales Data</H3>
 <H3 align="center"> Best Selling Texts</H3>
+`text`
 
 
