@@ -27,6 +27,7 @@ The best selling texts were challenging to obtain as well, mostly because of cop
 
 <H1 align="center">Topic Modeling</H1>
 
+<H1 align="center">Sentiment Analysis</H1>
 
 <H1 align="center">Random Forest Regression</H1>
 <p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/random_forest_pipeline.png" width="600" /></p>
