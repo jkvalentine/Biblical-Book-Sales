@@ -1,5 +1,3 @@
-#<center>Biblical-Book-Sales</center>
-
 ![Title Slide](https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/title_side.png)
 
 <H1 align="center">Motivation</H1>
