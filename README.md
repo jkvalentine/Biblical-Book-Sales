@@ -5,6 +5,9 @@
 
 <p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/diagram.png" width="600" /></p>
 
+<H1 align="center">The Project Process</H1>
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/project_flow.png" width="600" /></p>
+
 <H1 align="center">The Data</H1>
 The data for this project fall into three categories.
 
@@ -21,4 +24,14 @@ Highly accurate, publicly available book sales data is unfortunately unavilable.
 <H3 align="center"> Best Selling Texts</H3>
 
 The best selling texts were challenging to obtain as well, mostly because of copyright issues. For this project, I chose fictional texts with narrative structures and excluded all others. Because these texts aren't available in any one place, I searched for each text on the internet and included all the texts I could find in my analysis. The texts I excluded from my analysis and their reasons are listed in `texts_excluded_and_why.txt`. 
+
+<H1 align="center">Topic Modeling</H1>
+
+
+<H1 align="center">Random Forest Regression</H1>
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/random_forest_pipeline.png" width="600" /></p>
+
+<H1 align="center">Results</H1>
+
+<H1 align="center">Future Work</H1>
 
