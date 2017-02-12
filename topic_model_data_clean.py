@@ -24,7 +24,7 @@ with tarfile.open('/home/ubuntu/data/gutenberg_texts.tar.gz', mode='r:gz') as f:
                     #Remove beginning portion of each text
                     #containing intro Gutenberg info
                     first_pass_text = text_string[550:]
-                    
+
                     #Remove final portion of each text
                     #containing Gutenberg info
                     final_text = first_pass_text[:-13000]
@@ -32,7 +32,7 @@ with tarfile.open('/home/ubuntu/data/gutenberg_texts.tar.gz', mode='r:gz') as f:
                     #Make text string into temp string file
                     #to write to archive tar.gz text
                     string_file = StringIO()
-                    string_file.write(final_text)         
+                    string_file.write(final_text)
                     string_file.seek(0)
                     file_size = len(string_file.buf)
 
@@ -40,7 +40,7 @@ with tarfile.open('/home/ubuntu/data/gutenberg_texts.tar.gz', mode='r:gz') as f:
                     #tarfile object from string file object
                     info = tarfile.TarInfo(name=entry.name)
                     info.size = file_size
-                    
+
                     #Sanity check
                     print entry.name
                     print file_size

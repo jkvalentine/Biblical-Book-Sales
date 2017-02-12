@@ -39,7 +39,6 @@ def build_tfidf_vectorizer_model(text_paths, input='input'):
     return vectorizer.fit(text_paths)
 
 
-
 def vectorize_text(vectorizer, path_to_text_to_transform, directory=True):
     '''
     Vectorize text according to fitted model
@@ -64,10 +63,9 @@ def vectorize_text(vectorizer, path_to_text_to_transform, directory=True):
         return vectorized_texts
 
 
-
 def calculate_cosine_similarity(vectorized_texts, bible_vector):
     '''
-    Calculate cosine similarity among documents in 
+    Calculate cosine similarity among documents in
     vectorized corpus of texts
     INPUT:
         - vectorized_texts: vectorized representation of corpus '
@@ -79,6 +77,7 @@ def calculate_cosine_similarity(vectorized_texts, bible_vector):
     '''
     cosine_matrix = cosine_similarity(vectorized_texts, bible_vector)
     return cosine_matrix
+
 
 def save_model_as_pickle(file_name, model_name):
     '''
@@ -93,48 +92,14 @@ def save_model_as_pickle(file_name, model_name):
         print "PICKLE!"
 
 
-
 if __name__ == '__main__':
-
-    #To do: figure out how to stream data from S3;
-    # All directory path, text paths will change to refelect this
 
 
     directory_path = '/Users/jrrd/Galvanize/Biblical-Book-Sales/data/model_texts'
-    #directory_path = "/mnt/jkvalentine7695/Biblical_Book_Sales-Data/text_files/text_archives.tar.gz"
-    
-    #text_to_transform=['/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts/111_kjbible.txt']
-
-    #path_to_text_to_transform = "/Users/jrrd/Galvanize/Biblical-Book-Sales/data/best_sellers_texts"
 
     text_paths = create_path_directory(directory_path)
     tfidf_vectorizer = build_tfidf_vectorizer_model(text_paths,
                                                     input='filename',
                                                     max_features=15000)
-    #For a previous strategy to predict book sales
-    #bible_vector = vectorizer.transform(text_to_transform)
-
-    #Vectorized texts will take in best sellers texts
-    #vectorized_texts = vectorize_text(vectorizer, path_to_text_to_transform, directory=True)
-
-    #Will be used to compute cosine similarity of best selling texts relative to their
-    #TFIDF topic-model vectorization
-    #cosine_sim_matrix = calculate_cosine_similarity(bible_vector, vectorized_texts)
-
-    #Will extract cosine similarity row vectors: do I need this?
-    #Does tfidf row vector give me all the info I need?
-    #z = cosine_similarity(vectorized_texts)
 
     save_model_as_pickle('tfidf_model.pkl', tfidf_vectorizer)
-
-
-
-
-
-
-
-
-
-
-
-
