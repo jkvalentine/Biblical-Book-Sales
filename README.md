@@ -6,7 +6,7 @@
 <p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/diagram.png" width="600" /></p>
 
 <H1 align="center">The Data</H1>
-<p>The data for this project fall into three categories.</p>
+The data for this project fall into three categories.
 
 <H3 align="center"> Topic Model Texts</H3>
 To create the topic models for this project, I used the entire corpus of english texts from <a href="https://www.gutenberg.org/">Project Gutenberg</a>. There are several ways to obtain this corpus; I downloaded the 2010 Dual Layer DVD ISO via <a href="http://www.gutenberg.org/cdproject/pgdvd042010.iso.torrent">torrent</a> using the <a href="https://transmissionbt.com/download/">Transmission Torrent Client</a>, mounted the image onto my computer, and extracted all the plain text files. After I extracted all the plain text files from the ISO, I created a tar.gz file of all the texts in a single directory.
