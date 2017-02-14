@@ -5,9 +5,6 @@
 
 <p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/diagram.png" width="600" /></p>
 
-<H1 align="center">The Project Process</H1>
-<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/project_flow.png" width="600" /></p>
-
 <H1 align="center">The Data</H1>
 The data for this project fall into three categories.
 
@@ -23,14 +20,30 @@ Highly accurate, publicly available book sales data is unfortunately unavilable.
 
 <H3 align="center"> Best Selling Texts</H3>
 
-The best selling texts were challenging to obtain as well, mostly because of copyright issues. For this project, I chose fictional texts with narrative structures and excluded all others. Because these texts aren't available in any one place, I searched for each text on the internet and included all the texts I could find in my analysis. The texts I excluded from my analysis and their reasons are listed in `texts_excluded_and_why.txt`. 
+The best selling texts were challenging to obtain as well, mostly because of copyright issues. For this project, I chose fictional texts with narrative structures and excluded all others. Because these texts aren't available in any one place, I searched for each text on the internet and included all the texts I could find in my analysis. The texts I excluded from my analysis and their reasons are listed in `texts_excluded_and_why.txt`. Future work will include a larger corpus of texts representing a larger spread of sales data.
 
 <H1 align="center">Topic Modeling</H1>
+
+To extract latent topic features for this project, I chose to perform non-negative matrix factorization (NMF) and latent Dirichlet allocation (LDA). Both of these methods require a vectorized version of a corpus of texts; I trained a term-frequency inverse-document frequency (tfidf) vectorizer model using the Project Gutenberg english texts to produce a matrix where each row represents a document and the entries in each row vector represent the tfidf for each of the most frequent 15,000 words with common stop-words removed. To obtain this pickled model, I ran `topic_model_1.py` on an AWS EC2 instance with relevant path names changed as necessary.
+
+![tfidf matrix diagram]()
+
+To build and pickle my NMF and LDA models, I ran `topic_model_2.py` and `topic_model_3.py`, respectively, on an AWS EC2 instance because of the large vocabulary and significant run time for each model. 
+
+In terms of topic modeling, NMF provides a powerful and easily interpretable way to extract topics from a corpus. I transformed the Project Gutenberg texts using the pickled tfidf model and then built an NMF model using this vectorized corpus. In this process, with our vectorized corpus represented by the matrix `X` with dimensions `(n x m)`, we find the matrices `W` with dimensions `(n x k)`, and `H` with deimensions `(k x m)` such that `X ≈ W * H`. In this application, `n` is the number of documents in our corpus, `m` is the number of words, and `k` is the number of latent topic features. For this project, I chose `k = 100` to give enough variety of tpoics for such a large number of texts. To compute `W` and `H`, the Sci-Kit Learn NMF algorithm initializes `W` and `H` with random small numbers and then performs gradient descent on each entry such that `|W * H| - |X|` is minimized and each entry converges to less than some very small threshold. Since this is non-deterministic, precise topics are not guaranteed to appear in the same column indices each time unless the same random seed is given each time.
+
+![NMF matrix diagram]()
+
+LDA is a probabilistic approach to topic modeling which offers another interpretation of latent topics contained in a corpus. 
+
+![LDA process diagram]()
+![LDA matrix diagram]()
+
+
 
 <H1 align="center">Sentiment Analysis</H1>
 
 <H1 align="center">Random Forest Regression</H1>
-<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/random_forest_pipeline.png" width="600" /></p>
 
 <H1 align="center">Results</H1>
 
