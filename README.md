@@ -32,12 +32,14 @@ To build and pickle my NMF and LDA models, I ran `topic_model_2.py` and `topic_m
 
 In terms of topic modeling, NMF provides a powerful and easily interpretable way to extract topics from a corpus. I transformed the Project Gutenberg texts using the pickled tfidf model and then built an NMF model using this vectorized corpus. In this process, with our vectorized corpus represented by the matrix `X` with dimensions `(n x m)`, we find the matrices `W` with dimensions `(n x k)`, and `H` with deimensions `(k x m)` such that `X ≈ W * H`. In this application, `n` is the number of documents in our corpus, `m` is the number of words, and `k` is the number of latent topic features. For this project, I chose `k = 100` to give enough variety of tpoics for such a large number of texts. To compute `W` and `H`, the Sci-Kit Learn NMF algorithm initializes `W` and `H` with random small numbers and then performs gradient descent on each entry such that `|W * H| - |X|` is minimized and each entry converges to less than some very small threshold. Since this is non-deterministic, precise topics are not guaranteed to appear in the same column indices each time unless the same random seed is given each time.
 
-![NMF matrix diagram]()
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/nmf_matrix diagram.png" width="600" /></p>
 
 LDA is a probabilistic approach to topic modeling which offers another interpretation of latent topics contained in a corpus. 
 
-![LDA process diagram]()
-![LDA matrix diagram]()
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/lda_process_diagram.png" width="600" /></p>
+</br>
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/lda_matrix_diagram.png" width="600" /></p>
+
 
 
 
