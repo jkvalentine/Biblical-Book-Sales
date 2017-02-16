@@ -51,9 +51,12 @@ To give each text a polarity and subjectivty score, I performed sentiment analys
 
 
 <H1 align="center">Random Forest Regression</H1>
-To make my sales predictions, I chose to use a random forest regressor because of the low number of predictors relative to the data points. 
+To make my sales predictions, I chose to use a random forest regressor because of the low number of predictors relative to the data points. In `create_data_frame.py`, I vectorize each best selling text using the pickled tfidf vectorizer, transform it using the pickled NMF and LDA models, and compare each to that of the transformed version of The Bible using a cosine similarity metric. To compare book sales for best selling texts throughout the years, I normalized their sales data by dividing by the number of years in publication, giving a target of average sales per year. 
+</br>
+I performed a test-train split using `train_test_val_split.py` with 20% of my data set aside as a testing set and the remaining 80% as my training set. To train the random forest regressor, I used the polarity and subjectivity scores, NMF and LDA cosine similarity scores, and each texts average sales per year. To train my model and make predictions, I used `random_forest_model.py`.
 
 <H1 align="center">Results</H1>
+The results of my model were found to be inconclusive. I used an r-squared error metric using the out-of-bag estimate to calculate the r-squared value. 
 
 <H1 align="center">Future Work</H1>
 
