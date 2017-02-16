@@ -38,7 +38,7 @@ In terms of topic modeling, NMF provides a powerful and easily interpretable way
 
 <H3 align="center">LDA</H3>
 
-LDA is a probabilistic approach to topic modeling that uses Bayesian inference to offer another interpretation of latent topics contained in a corpus. Like before, I transformed the Project Gutenberg texts using the pickled tfidf model and then built an LDA model using this vectorized corpus. The words of the corpus are temporarily assigned to each of the `k = 100` topics I specified according to a Dirichlet distribution. For each document `d`, the LDA algorithm iterates through each word `w` and calculates `p(topic t|document d)` as the proportion of words in document `d` assigned to topic `t` and `p(word w| topic t)` as the proportion of assignments to topic `t` over all documents for `w`. Each word `w` is then assigned a new topic with probability `p(topic t|document d) * p(word w|topic t)` which amounts to the probability that topic `t` generated word `w` in document `d`. This process is repeated a large number of times until the model reaches equilibrium. The result is that each document is then represented as a distribution of topics based on each document's collection of words.
+LDA is a probabilistic approach to topic modeling that uses Bayesian inference to offer another interpretation of latent topics contained in a corpus. Like before, I transformed the Project Gutenberg texts using the pickled tfidf model and then built an LDA model using this vectorized corpus. The words of the corpus are temporarily assigned to each of the `k = 100` topics I specified according to a Dirichlet distribution. For each document `d`, the LDA algorithm iterates through each word `w` and calculates `p(topic t|document d)` as the proportion of words in document `d` assigned to topic `t` and `p(word w| topic t)` as the proportion of assignments to topic `t` over all documents for `w`. Each word `w` is then assigned a new topic with probability `p(topic t|document d) * p(word w|topic t)` which amounts to the probability that topic `t` generated word `w` in document `d`. This process is repeated a large number of times until the model reaches equilibrium, with the result that each document is then represented as a distribution of topics based on each document's collection of words.
 
 <p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/lda_process_diagram.png" width="600" /></p>
 </br>
@@ -46,10 +46,12 @@ LDA is a probabilistic approach to topic modeling that uses Bayesian inference t
 
 
 
-
 <H1 align="center">Sentiment Analysis</H1>
+To give each text a polarity and subjectivty score, I performed sentiment analysis using TextBlob's polarity and subjectivity analyzers in `sentiment_analysis.py`. TextBlob uses the <a href="http://www.clips.ua.ac.be/pages/pattern-en#sentiment">Pattern</a> library to evaluate each word's polarity and subjectivity and then provides an average score based on the words in a string. The Pattern library has a database of words with associated polarity scores ranging from -1 as negative, 0 as neutral, and +1 as positive; similarly, subjectivity scores for each word range from 0, as highly objective, to +1, as highly subjective. The accuracy of of this library in classifying movie scripts that have been hand-labeled as positive, neutral, or negative is about 75%.   
+
 
 <H1 align="center">Random Forest Regression</H1>
+To make my sales predictions, I chose to use a random forest regressor because of the low number of predictors relative to the data points. 
 
 <H1 align="center">Results</H1>
 
