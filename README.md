@@ -58,7 +58,7 @@ I performed a test-train split using `train_test_val_split.py` with 20% of my da
 <H1 align="center">Results</H1>
 The results of my model were found to be inconclusive. I used the random forest's out-of-bag error to calculate the r-squared error metric to evaluate my model. The r-squared score for the training data was `0.87` whereas the score for the test data was `-0.22`. This result indicates that my model is overfit to the data and that there is not enough data to distinguish the signal from the noise. Changing the testing and training data results in a testing r-squared score ranging from `-0.5` to `0.4` which shows that the error is highly dependent on the train-test split. This leads me to believe that I don't currently have enough data to confidently answer this question.
 
-<H3 align="center">nteresting Results</H3>
+<H3 align="center">Interesting Results</H3>
 The most interesting component of this project is the topic modeling of the many thousands of english texts from Porject Gutenberg. The topics that arise from NMF and LDA seem to share some overlap, especially where religion and Christianity are concerned. Some obvious topical similarities include medical diseases, slavery in the U.S., French words, Old English words, and the U.S. Civil war. I find it very interesting that the topics that arose in these topic models aren't more universal themes of literature, like good versus evil or man versus nature, but rather highly nuanced and specific themes, like pirates or Eastern European folklore.
 
 <H1 align="center">Future Work</H1>
