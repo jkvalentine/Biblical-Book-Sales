@@ -34,7 +34,7 @@ To build and pickle my NMF and LDA models, I ran `topic_model_2.py` and `topic_m
 
 In terms of topic modeling, NMF provides a powerful and easily interpretable way to extract topics from a corpus. I transformed the Project Gutenberg texts using the pickled tfidf model and then built an NMF model using this vectorized corpus. In this process, with our vectorized corpus represented by the matrix `X` with dimensions `(n x m)`, we find the matrices `W` with dimensions `(n x k)`, and `H` with deimensions `(k x m)` such that `X ≈ W * H`. In this application, `n` is the number of documents in our corpus, `m` is the number of words, and `k` is the number of latent topic features. For this project, I chose `k = 100` to give enough variety of tpoics for such a large number of texts. To compute `W` and `H`, the NMF algorithm initializes `W` and `H` with random small numbers and then performs gradient descent on each entry such that `|W * H| - |X|` is minimized and each entry converges to less than some very small threshold. Since this is non-deterministic, precise topics are not guaranteed to appear in the same column indices each time unless the same random seed is given each time.
 
-<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/nmf_matrix diagram.png" width="600" /></p>
+<p align="center"><img src="https://github.com/jkvalentine/Biblical-Book-Sales/blob/master/images/nmf_diagram.png" width="600" /></p>
 
 <H3 align="center">LDA</H3>
 
@@ -58,7 +58,7 @@ I performed a test-train split using `train_test_val_split.py` with 20% of my da
 <H1 align="center">Results</H1>
 The results of my model were found to be inconclusive. I used the random forest's out-of-bag error to calculate the r-squared error metric to evaluate my model. The r-squared score for the training data was `0.87` whereas the score for the test data was `-0.22`. This result indicates that my model is overfit to the data and that there is not enough data to distinguish the signal from the noise. Changing the testing and training data results in a testing r-squared score ranging from `-0.5` to `0.4` which shows that the error is highly dependent on the train-test split. This leads me to believe that I don't currently have enough data to confidently answer this question.
 
-<H3 align="center">Interesting Results</H3>
+<H3 align="center">nteresting Results</H3>
 The most interesting component of this project is the topic modeling of the many thousands of english texts from Porject Gutenberg. The topics that arise from NMF and LDA seem to share some overlap, especially where religion and Christianity are concerned. Some obvious topical similarities include medical diseases, slavery in the U.S., French words, Old English words, and the U.S. Civil war. I find it very interesting that the topics that arose in these topic models aren't more universal themes of literature, like good versus evil or man versus nature, but rather highly nuanced and specific themes, like pirates or Eastern European folklore.
 
 <H1 align="center">Future Work</H1>
