@@ -26,7 +26,6 @@ The best selling texts were challenging to obtain as well, mostly because of cop
 
 To extract latent topic features for this project, I chose to perform non-negative matrix factorization (NMF) and latent Dirichlet allocation (LDA). Both of these methods require a vectorized version of a corpus of texts; I trained a term-frequency inverse-document frequency (tfidf) vectorizer model using the Project Gutenberg english texts to produce a matrix where each row represents a document and the entries in each row vector represent the tfidf for each of the most frequent 15,000 words with common stop-words removed. To obtain this pickled model, I ran `topic_model_1.py` on an AWS EC2 instance with relevant path names changed as necessary.
 
-![tfidf matrix diagram]()
 
 To build and pickle my NMF and LDA models, I ran `topic_model_2.py` and `topic_model_3.py`, respectively, on an AWS EC2 instance because of the large vocabulary and significant run time for each model. 
 
